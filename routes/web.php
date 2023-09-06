@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ContactNoteController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,35 +19,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-function getContacts(){
-   return[
-        1=> ['id'=> 1, 'name' => 'Sanchirmaa', 'phone' => '123456879'],
-        2=> ['id'=> 2, 'name' => 'Name 2', 'phone' => '222222222'],
-        3=> ['id'=> 3, 'name' => 'Name 3', 'phone' => '333333333'],
-    ];
-};
 
+Route::get('/', WelcomeController::class);
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(ContactController::class)->name('contacts.')->group(function(){
+    Route::get('/contacts', 'index')->name('index');
+    Route::get('/create','create')->name('create');
+    Route::get('/contacts/{id}','show')->name('show');
 });
-
-Route::get('/contacts', function () {
-    $companies=[
-        1=> ['name' => 'Tavan Bogd', 'contacts' => 3],
-        2=> ['name' => 'Gobi', 'contacts' => 5],
-    ];
-    $contacts= []; // getContacts();
-    return view('contacts/index', compact('contacts','companies'));
-})->name('contacts.index');
-
-Route::get('/create', function () {
-return view('contacts.create');
-})->name('contacts.create');
-
-Route::get('/contacts/{id}', function ($id) {
-    $contacts= getContacts();
-    abort_if(!isset($contacts[$id]),404);
-    $contact= $contacts[$id];
-    return view('contacts.show')->with('contact', $contact);
-})->name('contacts.show');
+    Route::get('/tags',[TagController::class, 'index']);
+    Route::get('/tasks',[TaskController::class, 'index']);
+    Route::get('/companies',[CompanyController::class, 'index']);
+    Route::get('/activities',[ActivityController::class, 'index']);
