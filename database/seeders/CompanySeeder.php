@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 class CompanySeeder extends Seeder
 {
     /**
@@ -15,18 +16,21 @@ class CompanySeeder extends Seeder
     public function run()
     {
         $companies = [];
+        $faker= Faker::create();
 
-        foreach(range(1, 15) as $index){
+        foreach (range(1, 10) as $index) {
             $company = [
-                'name'=> $name = "Company $index",
-                'address' =>"Address  $name",
-                'website' =>"Website $name",
-                'email' =>"Email $name",
-                'created_at' =>now(),
-                'updated_at' =>now()
+                'name' => $faker->company(),
+                'address' => $faker->address(),
+                'website' => $faker->domainName(),
+                'email' => $faker->email(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
             $companies[] = $company;
         }
+
+        DB::table('companies')->delete();
         DB::table('companies')->insert($companies);
     }
 }
