@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Repositories\CompanyRepository;
 use App\Models\Contact;
@@ -14,8 +15,8 @@ class ContactController extends Controller
 
     public function index(CompanyRepository $company, Request $request)
     {
-       $companies= $company->pluck();
-        $contacts = Contact::latest()->get();
+        $companies= $company->pluck();
+        $contacts = Contact::latest()->paginate(10);
         return view('contacts.index', compact('contacts', 'companies'));
     }
 
@@ -24,7 +25,7 @@ class ContactController extends Controller
     }
 
     public function show($id){
-        $contact= Contact::findOrFail($id);
-        return view('contacts.show')->with('contact', $contact);
-       }
+        $contactaa= Contact::findOrFail($id);
+        return view('contacts.show')->with('contact', $contactaa);
+    }
 }

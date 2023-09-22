@@ -7,7 +7,6 @@ class CompanyRepository
 {
     public function pluck()
     {
-       //return [Company::orderBy('name')->pluck('name', 'id')];
-   }
-
+        return Company::orderBy('name')->pluck('name', 'id');
+    }
 }

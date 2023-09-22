@@ -3,7 +3,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col">
-            @include('contacts._company-selection')
+          @include('contacts._company-selection')
         </div>
         <div class="col">
           <div class="input-group mb-3">
