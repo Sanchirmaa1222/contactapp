@@ -25,6 +25,7 @@ Route::controller(ContactController::class)->name('contacts.')->group(function()
     Route::get('/contacts', 'index')->name('index');
     Route::get('/create','create')->name('create');
     Route::get('/contacts/{phone}','show')->name('show');
+    Route::get('/edit/{phone}','edit')->name('edit');
 });
     Route::get('/tags',[TagController::class, 'index']);
     Route::get('/tasks',[TaskController::class, 'index']);

@@ -16,16 +16,26 @@ class ContactController extends Controller
     public function index(CompanyRepository $company, Request $request)
     {
         $companies= $company->pluck();
-        $contacts = Contact::latest()->paginate(10);
+        $contacts = Contact::latest()->where(function ($query){
+            if ($companyId = request()->query("company_id")) {
+                $query->where("company_id",$companyId);
+            }
+        })->paginate(10);
         return view('contacts.index', compact('contacts', 'companies'));
     }
 
     public function create(){
-        return view('contacts.create');
+        $companies = $this->company->pluck();
+        return view('contacts.create', compact('companies'));
     }
 
     public function show($id){
-        $contactaa= Contact::findOrFail($id);
-        return view('contacts.show')->with('contact', $contactaa);
+        $contact= Contact::findOrFail($id);
+        return view('contacts.show')->with('contact', $contact);
     }
+    public function edit($id){
+        $contact= Contact::findOrFail($id);
+        return view('contacts.edit')->with('contact', $contact);
+    }
+
 }
