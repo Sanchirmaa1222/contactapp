@@ -11,7 +11,10 @@
             <div class="card-header card-title">
               <strong>Add New Contact</strong>
             </div>
-@include("contacts._form");
+            <form action= "{{ route('contacts.store') }}" method="POST">
+                @csrf
+                @include('contacts._form');
+            </form>
           </div>
         </div>
       </div>

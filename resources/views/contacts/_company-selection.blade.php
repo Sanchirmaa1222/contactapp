@@ -1,4 +1,4 @@
-<form>
+<form method = "GET">
 <select class="custom-select" name="company_id" onchange = "this.form.submit()">
     <option value="" selected>All Companies</option>
     @foreach ($companies as $id => $aa)

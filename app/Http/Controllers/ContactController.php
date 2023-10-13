@@ -33,9 +33,26 @@ class ContactController extends Controller
         $contact= Contact::findOrFail($id);
         return view('contacts.show')->with('contact', $contact);
     }
-    public function edit($id){
-        $contact= Contact::findOrFail($id);
-        return view('contacts.edit')->with('contact', $contact);
+    public function edit(){
+        $companies = $this->company->pluck();
+        return view('contacts.edit')->with('companies', $companies);
+    //,$contacts
+    }
+    public function store(Request $request )
+    {
+        $request->validate(
+            [
+                'first_name' => 'required|string|max:50',
+                'last_name' =>'required|string|max:50',
+                'email' =>'required|email',
+                'phone' => 'nullable',
+                'address' => 'nullable',
+                'company_id' => 'required|exists:companies,id'
+            ]
+            );
+        Contact::create($request->all());
+        return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
+
     }
 
 }

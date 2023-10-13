@@ -23,6 +23,7 @@ return new class extends Migration
             //$table->foreignId('company_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
+
     }
 
     /**
